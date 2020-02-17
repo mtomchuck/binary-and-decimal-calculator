@@ -1,0 +1,213 @@
+// fonts
+$font-number: Arial;
+$font-text: Tahoma;
+
+// core vars
+$block-size: 85px;
+$gutter: 10px;
+$columns: 10;
+$rows: 3;
+
+// colors
+$background: #C0C0C0;
+$text-color: #8D8276;
+$interface: #545E6E;
+$highlight: white;
+
+
+
+body {
+	background: $background;
+}
+
+h2 {
+	font-family: $font-text;
+	font-size: 2.6em;
+	text-align: center;
+	color: $highlight;
+	text-shadow: 3px 3px 0 rgba($highlight, .3);
+	padding: 1em;
+	box-sizing: border-box;
+}
+
+.info {
+	width: 45vw;
+	max-width: 600px;
+	font-family: $font-text;
+	line-height: 1.4;
+	margin: 0 auto;
+	text-align: center;
+	color: $text-color;
+}
+
+section {
+	margin-top: 50px;
+	width: calc(100vw - 60px);
+	height: calc(100vh - 60px);
+}
+
+
+.binary-calculator, .dec-calculator{
+	display: block;
+	width: $columns * ($block-size + $gutter);
+	height: $rows * $block-size;
+	position: relative;
+	left: 10vw;
+	margin-top: 15vh;
+
+	.group-number {
+		position: absolute;
+	}
+	.display-number,
+	.result-bit {
+		display: block;
+		width: $block-size;
+		height: $block-size;
+		position: absolute;
+		overflow: hidden;
+		box-sizing: border-box;
+		font-family: $font-number;
+		font-size: $block-size*.4;
+	}
+
+	.display-number {
+		cursor: pointer;
+		background: lighten($background, 10%);
+		border-radius: 10%;
+
+		&:hover {
+			font-size: $block-size*.5;
+		}
+
+	}
+
+	%display-number__value {
+		display: block;
+		float: left;
+		width: $block-size;
+		height: $block-size;
+		text-align: center;
+		line-height: $block-size;
+	}
+
+	.display-number__value--zero,
+	.display-number__value--one {
+		@extend %display-number__value;
+		color: $text-color;
+	}
+
+
+	.result-bit {
+		.display-number__value--zero,
+		.display-number__value--one {
+			color: $highlight;
+		}
+	}
+
+	.operator-bar {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: $gutter/2;
+		background: $interface;
+		top: ($block-size + $gutter) * ($rows - 1) + $gutter/2;
+		left: $block-size;
+		border-radius: 5px;
+
+		span {
+			// content: '+';
+
+			font-size: $block-size;
+			position: absolute;
+			top: $block-size * -1;
+			left: 25px;
+			font-family: $font-text;
+			color: $interface;
+			cursor: pointer;
+		}
+	}
+
+
+
+	@for $i from 0 through $columns {
+		.group-number:nth-of-type(#{$i + 1}) {
+			right: $i * ($block-size + $gutter);
+
+			.display-number:nth-of-type(1){
+				top: 0;
+			}
+			.display-number:nth-of-type(2){
+				top: $block-size + $gutter;
+			}
+			.result-bit{
+				top: ($block-size + $gutter*1.5) * 2;
+			}
+		}
+	}
+
+	.display-17,
+	.display-18 {
+		visibility: hidden;
+	}
+
+
+	.result-9 {
+		border-bottom: 5px solid lighten($background, 10%);
+		&:after {
+			content: 'carry';
+			position: absolute;
+			bottom: 5px;
+			left: 0;
+			text-align: center;
+			font-size: .5em;
+			font-family: $font-text;
+			width: 100%;
+			color: $highlight;
+		}
+	}
+}
+
+.tooltip {
+	display: none;
+}
+
+.tooltip{
+  background: lightslategrey;
+  border: 2px solid #666666;
+  font-size: 20px;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  width: 158px;
+  top:-111px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  -moz-box-shadow: 0px 0px 5px #aaa;
+  -webkit-box-shadow: 0px 0px 5px #aaa;
+  box-shadow: 0px 0px 5px #aaa;
+}
+
+.chatBubbleArrow{
+  border-color: lightslategrey transparent transparent transparent;
+  border-style: solid;
+  border-width: 10px;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+  bottom: -19px;
+  left: 30px;
+}
+
+.chatBubbleArrowBorder{
+  border-color: #666666 transparent transparent transparent;
+  border-style: solid;
+  border-width: 10px;
+  height:0;
+  width:0;
+  position:absolute;
+  bottom:-22px;
+  left:30px;
+}
